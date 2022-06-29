@@ -88,7 +88,9 @@ export class GameComponent implements OnInit {
   }
 
   addGuess(): void {
-    if (this.guess.getValue().length === 5 && /^[a-z]+$/.test(this.guess.getValue()) && this.isLegalWord()) {
+    if (this.guess.getValue().length === 5 &&
+      /^[a-z]+$/.test(this.guess.getValue()) &&
+      WORDS.includes(this.guess.getValue())) {
       let i = 0;
       this.cells[this.filledRows].forEach(cell => {
         let char = this.guess.getValue().charAt(i);
@@ -112,16 +114,6 @@ export class GameComponent implements OnInit {
     } else {
       this.guess.setValue();
     }
-  }
-
-  isLegalWord(): boolean {
-    let legal = false;
-    WORDS.forEach(word => {
-      if (word === this.guess.getValue()) {
-        legal = true;
-      }
-    })
-    return legal;
   }
 
   isExists(word: string, char: string): string {
