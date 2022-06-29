@@ -1,0 +1,15 @@
+input {
+  outline: 0;
+  box-shadow: none;
+  color: #5b5b5b;
+  padding: 11px 19px;
+  border-radius: 5px;
+  border: 1px solid #b2b2b2;
+  background-color: #e8e8e8;
+  margin-right: 10px;
+}
+
+input:focus {
+  transition: border 0.2s ease-in-out;
+  border: 1px solid #5b5b5b !important;
+}

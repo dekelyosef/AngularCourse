@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Wordle Game</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>Wordle</h1>
+    </div>
+    <div class="guess">
+      <div class="guess-header">Enter the next guess</div>
+      <div class="guess-input">
+        <input type="text" id="input-guess" name="guess" style="width: 90%" placeholder="YOUR GUESS HERE" maxlength="5">
+        <button id="button-ok" class="button">OK</button>
+      </div>
+    </div>
+    <div class="game-body">
+      <div class="words-container">
+        <div class="row">
+          <div id="cell-0-0" class="word"></div>
+          <div id="cell-0-1" class="word"></div>
+          <div id="cell-0-2" class="word"></div>
+          <div id="cell-0-3" class="word"></div>
+          <div id="cell-0-4" class="word"></div>
+        </div>
+        <div class="row">
+          <div id="cell-1-0" class="word"></div>
+          <div id="cell-1-1" class="word"></div>
+          <div id="cell-1-2" class="word"></div>
+          <div id="cell-1-3" class="word"></div>
+          <div id="cell-1-4" class="word"></div>
+        </div>
+        <div class="row">
+          <div id="cell-2-0" class="word"></div>
+          <div id="cell-2-1" class="word"></div>
+          <div id="cell-2-2" class="word"></div>
+          <div id="cell-2-3" class="word"></div>
+          <div id="cell-2-4" class="word"></div>
+        </div>
+        <div class="row">
+          <div id="cell-3-0" class="word"></div>
+          <div id="cell-3-1" class="word"></div>
+          <div id="cell-3-2" class="word"></div>
+          <div id="cell-3-3" class="word"></div>
+          <div id="cell-3-4" class="word"></div>
+        </div>
+        <div class="row">
+          <div id="cell-4-0" class="word"></div>
+          <div id="cell-4-1" class="word"></div>
+          <div id="cell-4-2" class="word"></div>
+          <div id="cell-4-3" class="word"></div>
+          <div id="cell-4-4" class="word"></div>
+        </div>
+        <div class="row">
+          <div id="cell-5-0" class="word"></div>
+          <div id="cell-5-1" class="word"></div>
+          <div id="cell-5-2" class="word"></div>
+          <div id="cell-5-3" class="word"></div>
+          <div id="cell-5-4" class="word"></div>
+        </div>
+      </div>
+    </div>
+    <div class="reset">
+      <button id="button-reset" class="button">RESET</button>
+    </div>
+    <div class="header">
+      <h2 id="game-over" style="display:none"></h2>
+    </div>
+    <script src="main-bundle.js"></script>
+  </body>
+</html>

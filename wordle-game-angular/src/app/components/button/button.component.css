@@ -1,0 +1,27 @@
+.pt-button {
+  display: grid;
+  padding: 10px 40px;
+  border-radius: 4px;
+  background-color: blue;
+  color: white;
+  cursor: pointer;
+}
+
+.pt-button button {
+  outline: none;
+  border: 0;
+  box-shadow: inherit;
+  background-color: blue;
+  color: white;
+  cursor: pointer;
+}
+
+.disabled {
+  background-color: gray;
+  cursor: initial;
+}
+
+.disabled button {
+  background-color: gray;
+  cursor: initial;
+}
