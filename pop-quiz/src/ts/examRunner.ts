@@ -1,20 +1,25 @@
 import {Exam} from "./exam";
 import {Answer} from "./answer";
+import {Question} from "./question";
 
 export class ExamRunner {
-    private answers: Answer[];
+    private answers: Answer[] = [];
 
     constructor(private exam: Exam) {}
 
-    currentQuestion(): number {
-        return this.answers.length;
+    currentQuestion(): Question {
+        return this.exam.questions[this.answers.length];
     }
 
     isOver(): boolean {
-        if (this.currentQuestion() === 10) {
+        if (this.answers.length === 10) {
             return true;
         }
         return false;
+    }
+
+    get getExam() {
+        return this.exam;
     }
 
     get getAnswers() {
@@ -32,7 +37,12 @@ export class ExamRunner {
     }
 
     answerNextQuestion(answerIndex: number) {
-        // this.exam.questions[this.currentQuestion()].answers =
+        let isCorrect = false;
+        if (this.currentQuestion().correct == answerIndex) {
+            isCorrect = true;
+        }
+        let answer = {index: answerIndex, isCorrect: isCorrect}
+        this.answers.push(answer);
     }
 
 }
