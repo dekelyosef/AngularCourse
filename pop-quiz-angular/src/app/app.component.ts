@@ -24,8 +24,6 @@ export class AppComponent {
     this.isBusy = true;
     if(!this.isQuizOver) {
       this.state = await this.questionService.userSelectAnswer(answer);
-      // this.summary = this.questionService.summary;
-      // this.score = this.questionService.score;
       this.isQuizOver = !this.state.currentQuestion;
     }
     this.isBusy = false;
