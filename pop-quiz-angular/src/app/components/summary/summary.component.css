@@ -1,0 +1,31 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.answer-box {
+  height: 10%;
+  margin: 5px;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+
+.answer-box.correct {
+  background: lightgreen;
+  color: darkgreen;
+}
+
+.answer-box.wrong {
+  background: lightcoral;
+  color: darkred;
+}
+
+h4 {
+  margin: 4px;
+}
+
+p {
+  margin: 4px;
+}

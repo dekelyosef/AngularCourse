@@ -1,0 +1,10 @@
+<div class="root">
+  <h2>Quiz Over! YOUR FINAL SCORE {{score}}%</h2>
+  <div class="answer-box" *ngFor="let question of questions">
+    <h4>{{question.caption}}</h4>
+    <p class="user-answer"
+      [class.correct]="question.userAnswer === question.correctAnswer"
+      [class.wrong]="question.userAnswer !== question.correctAnswer">{{question.answers[question.userAnswer]}}</p>
+    <p class="correct-answer">{{question.answers[question.correctAnswer]}}</p>
+  </div>
+</div>

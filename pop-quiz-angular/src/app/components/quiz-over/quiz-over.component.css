@@ -1,0 +1,48 @@
+h2 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  color: lightslategray;
+  text-align: center;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.answer-box {
+  height: 10%;
+  margin: 5px;
+  padding: 3px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  color: #000000;
+  background: rgba(201, 201, 201, 0.32);
+}
+
+h4 {
+  margin: 4px;
+}
+
+p {
+  margin: 4px;
+}
+
+.user-answer {
+  font-weight: bold;
+}
+
+.user-answer.correct {
+  color: darkgreen;
+}
+
+.user-answer.wrong {
+  color: darkred;
+}
+
+.correct-answer {
+  font-weight: bold;
+  color: darkgreen;
+}

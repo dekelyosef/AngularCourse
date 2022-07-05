@@ -1,0 +1,26 @@
+h2 {
+  margin: 10px;
+  text-align: center;
+  border-bottom: 1px solid #f49d0b;
+}
+
+ul {
+  padding: 0px;
+  margin: 0px;
+}
+
+li {
+  list-style: none;
+  margin: 8px;
+  padding: 4px;
+  border: 2px solid cornflowerblue;
+  border-radius: 8px;
+  cursor: pointer;
+  background: rgba(201, 201, 201, 0.32);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #000000;
+}
+
+li:hover {
+  background: rgba(201, 201, 201, 0.67);
+}
