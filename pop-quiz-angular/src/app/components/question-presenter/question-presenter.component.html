@@ -1,4 +1,5 @@
 <h2>{{question.caption}}</h2>
 <ul>
-  <li (click)="onSelectAnswer(answer)" *ngFor="let answer of question.answers">{{answer}}</li>
+  <li (click)="onSelectAnswer(answer)" *ngFor="let answer of question.answers"
+      [ngClass]="disabled ? 'disabled': ''">{{answer}}</li>
 </ul>

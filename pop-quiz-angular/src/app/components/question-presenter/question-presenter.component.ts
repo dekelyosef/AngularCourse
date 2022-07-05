@@ -13,8 +13,12 @@ export class QuestionPresenterComponent implements OnInit {
   @Output()
   answerChosen = new EventEmitter<string>();
 
+  @Input()
+  disabled: boolean;
+
   constructor() {
     this.question = {caption: "", answers: [], correctAnswer: -1, userAnswer: -1};
+    this.disabled = false;
   }
 
   ngOnInit(): void {

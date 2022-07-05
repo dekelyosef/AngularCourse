@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {Question} from "./entities/question";
+import {QuestionService} from "./services/question.service";
+import {State} from "./entities/state";
 import {QUESTIONS} from "./entities/questions";
 
 @Component({
@@ -8,32 +10,25 @@ import {QUESTIONS} from "./entities/questions";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  currentQuestion: Question;
-  currentQuestionIndex: number;
-  summary: Question[];
+  state: State;
   isQuizOver: boolean;
-  score: number;
+  isBusy: boolean;
 
-  constructor() {
-    this.currentQuestionIndex = 0;
-    this.currentQuestion = QUESTIONS[this.currentQuestionIndex];
-    this.summary = [];
+  constructor(private questionService: QuestionService) {
+    this.state = this.questionService.state;
+    this.isBusy = false;
     this.isQuizOver = false;
-    this.score = 0;
   }
 
-  userSelectAnswer(answer: string) {
+  async userSelectAnswer(answer: string) {
+    this.isBusy = true;
     if(!this.isQuizOver) {
-      let answerIndex = this.currentQuestion.answers.indexOf(answer);
-      this.currentQuestion.userAnswer = answerIndex;
-      if (this.currentQuestion.userAnswer === this.currentQuestion.correctAnswer) {
-        this.score += 10;
-      }
-      this.summary.push(this.currentQuestion);
-      this.currentQuestionIndex++;
-      this.currentQuestion = QUESTIONS[this.currentQuestionIndex];
-      this.isQuizOver = !this.currentQuestion;
+      this.state = await this.questionService.userSelectAnswer(answer);
+      // this.summary = this.questionService.summary;
+      // this.score = this.questionService.score;
+      this.isQuizOver = !this.state.currentQuestion;
     }
+    this.isBusy = false;
   }
 
 }
