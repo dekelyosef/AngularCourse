@@ -7,7 +7,7 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 })
 export class TextInputComponent implements OnInit {
   @ViewChild("inputVal")
-  public input: ElementRef = new ElementRef<any>("");
+  input: ElementRef = new ElementRef<any>("");
 
   @Input()
   disabled: boolean = false;
@@ -17,7 +17,9 @@ export class TextInputComponent implements OnInit {
   ngOnInit(): void {}
 
   getValue(): string {
-    return this.input.nativeElement.value;
+    let value = this.input.nativeElement.value;
+    this.setValue();
+    return value;
   }
 
   setValue(): void {

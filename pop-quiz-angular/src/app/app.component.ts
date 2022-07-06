@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import {Question} from "./entities/question";
 import {QuestionService} from "./services/question.service";
 import {State} from "./entities/state";
-import {QUESTIONS} from "./entities/questions";
 
 @Component({
   selector: 'app-root',

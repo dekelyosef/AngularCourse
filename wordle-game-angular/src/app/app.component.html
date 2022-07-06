@@ -1,1 +1,13 @@
-<app-game></app-game>
+<app-title caption="Wordle"></app-title>
+<div class="guess">
+  <label class="guess-header">Enter the next guess</label>
+  <div class="guess-input">
+    <app-text-input #guessInput [disabled]="isBusy"></app-text-input>
+    <app-button title="OK" (click)="addGuess(guessInput.getValue())" [disabled]="isBusy"></app-button>
+  </div>
+</div>
+<app-board [board]="board"></app-board>
+<div class="reset">
+  <app-button title="RESET" (click)="onResetClick()"></app-button>
+</div>
+<app-title *ngIf="board.isGameOver" [caption]="getGameOverStatus()"></app-title>
