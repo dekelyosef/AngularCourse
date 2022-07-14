@@ -2,12 +2,23 @@
 <div class="guess">
   <label class="guess-header">Enter the next guess</label>
   <div class="guess-input">
-    <app-text-input #guessInput [disabled]="isBusy"></app-text-input>
-    <app-button title="OK" (click)="addGuess(guessInput.getValue())" [disabled]="isBusy"></app-button>
+    <input #nextGuess
+           [disabled]="(isBusyAndOver$ | async)"
+           name="newGuess"
+           type="text"
+           maxLength="5"
+           placeholder="YOUR GUESS HERE">
+    <app-button title="OK"
+                [disabled]="!!(isBusyAndOver$ | async)"
+                (click)="addGuess(nextGuess.value)"
+                (click)="nextGuess.value = ''">
+    </app-button>
   </div>
 </div>
-<app-board [board]="board"></app-board>
+<app-board></app-board>
 <div class="reset">
-  <app-button title="RESET" (click)="onResetClick()"></app-button>
+  <app-button title="RESET"
+              [disabled]="!!(isBusy$ | async)"
+              (click)="onResetClick()"></app-button>
 </div>
-<app-title *ngIf="board.isGameOver" [caption]="getGameOverStatus()"></app-title>
+<app-title *ngIf="(board$ | async)!.isGameOver" [caption]="getGameOverStatus()"></app-title>

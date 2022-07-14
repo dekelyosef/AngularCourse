@@ -1,7 +1,7 @@
 <div class="game-body">
-  <div class="words-container" *ngFor="let cellRow of board.cells">
+  <div class="words-container" *ngFor="let cellRow of (board$ | async)!.cells">
     <div class="row" *ngFor="let cell of cellRow">
-      <app-cell [content]="cell.content" [status]="cell.status" [color]="cell.color"></app-cell>
+      <app-cell [cell]="cell"></app-cell>
     </div>
   </div>
 </div>

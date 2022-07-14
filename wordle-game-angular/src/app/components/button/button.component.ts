@@ -10,7 +10,7 @@ export class ButtonComponent implements OnInit {
   title? = '';
 
   @Input()
-  disabled? = false;
+  disabled = false;
 
   @Input()
   onClick: () => void = () => {};
@@ -18,5 +18,6 @@ export class ButtonComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
 }
 

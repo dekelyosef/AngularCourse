@@ -1,3 +1,1 @@
-export interface STATUS {
-  status: "empty" | "wrong" | "exists" | "exact";
-}
+export type STATUS = "empty" | "wrong" | "exists" | "exact";

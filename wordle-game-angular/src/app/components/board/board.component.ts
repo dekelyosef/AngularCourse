@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Board} from "../../entities/board";
-import {GameService} from "../../services/game.service";
+import {BoardService} from "../../services/board.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-board',
@@ -8,13 +9,12 @@ import {GameService} from "../../services/game.service";
   styleUrls: ['./board.component.css']
 })
 export class BoardComponent implements OnInit {
-  @Input()
-  board: Board;
+  board$!: Observable<Board>;
 
-  constructor(private gameService: GameService) {
-    this.board = this.gameService.getState();
+  constructor(private boardService: BoardService) {}
+
+  ngOnInit(): void {
+    this.board$ = this.boardService.getState();
   }
-
-  ngOnInit(): void {}
 
 }

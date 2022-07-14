@@ -5,4 +5,5 @@ export interface Board {
   readonly filledRows: number;
   readonly word: string;
   readonly isGameOver: boolean;
+  readonly hasWon: boolean;
 }

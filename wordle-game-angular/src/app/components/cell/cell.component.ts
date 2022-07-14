@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {STATUS} from "../../entities/status";
+import {Cell} from "../../entities/cell";
 
 @Component({
   selector: 'app-cell',
@@ -8,18 +8,9 @@ import {STATUS} from "../../entities/status";
 })
 export class CellComponent implements OnInit {
   @Input()
-  status: STATUS = {status: "empty"};
-
-  @Input()
-  content: string = "";
-
-  @Input()
-  color: string = "";
-
-  flag: boolean = true;
+  cell: Cell = {content: '', status: "empty", color: ''}
 
   constructor() {}
 
   ngOnInit(): void {}
-
 }

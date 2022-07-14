@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Board} from "./entities/board";
-import {GameService} from "./services/game.service";
+import {BoardService} from "./services/board.service";
 import {WORDS} from "./entities/words";
+import {merge, Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -9,38 +10,31 @@ import {WORDS} from "./entities/words";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  board: Board;
-  isBusy: boolean;
 
-  constructor(private gameService: GameService) {
-    this.board = this.gameService.getState();
-    this.isBusy = false;
+  board$!: Observable<Board>;
+  guess$!: Observable<string>;
+  isBusy$!: Observable<boolean>;
+  isBusyAndOver$!: Observable<boolean>;
+
+  constructor(private boardService: BoardService) {}
+
+  ngOnInit(): void {
+    this.board$ = this.boardService.getState();
+    this.isBusy$ = this.boardService.getIsBusy();
+    this.isBusyAndOver$ = merge(this.isBusy$, this.boardService.getIsGameOver());
   }
 
-  ngOnInit(): void {}
-
-  isGameOver(): boolean {
-    return this.board.isGameOver;
+  getGameOverStatus(): string {
+    return this.boardService.getGameOverStatus();
   }
 
-  getGameOverStatus() {
-    return "GAME OVER!  " + (this.gameService.isWinner ? "  YOU WON  " : "  YOU LOST  ")
-      + "  AFTER  " + (this.board.filledRows) + "  GUESSES";
+  onResetClick(): void {
+    this.boardService.reset();
   }
 
-  async onResetClick() {
-    this.gameService.reset();
-    this.board = this.gameService.getState();
-    this.isBusy = false;
-  }
-
-  async addGuess(guess: string) {
+  async addGuess(guess: string): Promise<void> {
     if (guess.length === 5 && /^[a-z]+$/.test(guess) && WORDS.includes(guess)) {
-      this.isBusy = true;
-      this.board = await this.gameService.addGuess(guess);
-      if(!this.isGameOver()) {
-        this.isBusy = false;
-      }
+      await this.boardService.addGuess(guess);
     }
   }
 

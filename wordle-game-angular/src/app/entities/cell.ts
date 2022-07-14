@@ -1,7 +1,7 @@
 import {STATUS} from "./status";
 
 export interface Cell {
-  content: string;
-  status: STATUS;
-  color: string;
+  readonly content: string;
+  readonly status: STATUS;
+  readonly color: string;
 }
