@@ -1,30 +1,25 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {QuestionService} from "./services/question.service";
 import {State} from "./entities/state";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  state: State;
-  isQuizOver: boolean;
-  isBusy: boolean;
+export class AppComponent implements OnInit {
 
-  constructor(private questionService: QuestionService) {
-    this.state = this.questionService.state;
-    this.isBusy = false;
-    this.isQuizOver = false;
-  }
+  state$!: Observable<State>;
+  isBusy$!: Observable<boolean>;
+  isQuizOver$!: Observable<boolean>;
 
-  async userSelectAnswer(answer: string) {
-    this.isBusy = true;
-    if(!this.isQuizOver) {
-      this.state = await this.questionService.userSelectAnswer(answer);
-      this.isQuizOver = !this.state.currentQuestion;
-    }
-    this.isBusy = false;
+  constructor(private questionService: QuestionService) {}
+
+  ngOnInit(): void {
+    this.state$ = this.questionService.getState();
+    this.isBusy$ = this.questionService.getIsBusy();
+    this.isQuizOver$ = this.questionService.getIsQuizOver();
   }
 
 }

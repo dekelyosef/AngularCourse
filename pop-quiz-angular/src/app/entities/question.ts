@@ -1,6 +1,6 @@
 export interface Question {
-  caption: string;
-  answers: string[];
-  correctAnswer: number;
-  userAnswer: number;
+  readonly caption: string;
+  readonly answers: string[];
+  readonly correctAnswer: number;
+  readonly userAnswer: number;
 }

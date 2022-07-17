@@ -1,6 +1,6 @@
 <div class="root">
-  <h2>Quiz Over! YOUR FINAL SCORE {{score}}%</h2>
-  <div class="answer-box" *ngFor="let question of questions">
+  <h2>Quiz Over! YOUR FINAL SCORE {{(state$ | async)!.score}}%</h2>
+  <div class="answer-box" *ngFor="let question of (state$ | async)!.summary">
     <h4>{{question.caption}}</h4>
     <p class="user-answer"
       [class.correct]="question.userAnswer === question.correctAnswer"

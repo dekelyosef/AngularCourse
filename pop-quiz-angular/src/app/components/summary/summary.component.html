@@ -1,5 +1,5 @@
 <div class="root">
-  <div class="answer-box" *ngFor="let question of questions"
+  <div class="answer-box" *ngFor="let question of (state$ | async)!.summary"
        [class.correct]="question.userAnswer === question.correctAnswer"
        [class.wrong]="question.userAnswer !== question.correctAnswer">
     <h4>{{question.caption}}</h4>

@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Question} from "../../entities/question";
+import {Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {QuestionService} from "../../services/question.service";
+import {State} from "../../entities/state";
 
 @Component({
   selector: 'app-question-presenter',
@@ -7,25 +9,18 @@ import {Question} from "../../entities/question";
   styleUrls: ['./question-presenter.component.css']
 })
 export class QuestionPresenterComponent implements OnInit {
-  @Input()
-  question: Question;
 
-  @Output()
-  answerChosen = new EventEmitter<string>();
+  state$!: Observable<State>;
+  disabled$!: Observable<boolean>;
 
-  @Input()
-  disabled: boolean;
-
-  constructor() {
-    this.question = {caption: "", answers: [], correctAnswer: -1, userAnswer: -1};
-    this.disabled = false;
-  }
+  constructor(private questionService: QuestionService) {}
 
   ngOnInit(): void {
+    this.state$ = this.questionService.getState();
+    this.disabled$ = this.questionService.getIsBusy();
   }
 
   onSelectAnswer(answer: string) {
-    this.answerChosen.emit(answer);
+    this.questionService.answerChosen(answer).then();
   }
-
 }

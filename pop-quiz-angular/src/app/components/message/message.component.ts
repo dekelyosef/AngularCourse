@@ -13,7 +13,5 @@ export class MessageComponent implements OnInit {
     this.message = "";
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

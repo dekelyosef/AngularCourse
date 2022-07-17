@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Question} from "../../entities/question";
+import {Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {State} from "../../entities/state";
+import {QuestionService} from "../../services/question.service";
 
 @Component({
   selector: 'app-summary',
@@ -7,14 +9,13 @@ import {Question} from "../../entities/question";
   styleUrls: ['./summary.component.css']
 })
 export class SummaryComponent implements OnInit {
-  @Input()
-  questions: Question[];
 
-  constructor() {
-    this.questions = [];
-  }
+  state$!: Observable<State>;
+
+  constructor(private questionService: QuestionService) {}
 
   ngOnInit(): void {
+    this.state$ = this.questionService.getState();
   }
 
 }

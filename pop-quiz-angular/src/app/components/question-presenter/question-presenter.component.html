@@ -1,5 +1,5 @@
-<h2>{{question.caption}}</h2>
+<h2>{{(state$ | async)!.currentQuestion.caption}}</h2>
 <ul>
-  <li (click)="onSelectAnswer(answer)" *ngFor="let answer of question.answers"
-      [ngClass]="disabled ? 'disabled': ''">{{answer}}</li>
+  <li (click)="onSelectAnswer(answer)" *ngFor="let answer of (state$ | async)!.currentQuestion.answers"
+      [ngClass]="(disabled$ | async) ? 'disabled': ''">{{answer}}</li>
 </ul>

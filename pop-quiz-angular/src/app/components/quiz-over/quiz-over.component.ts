@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Question} from "../../entities/question";
+import {Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {State} from "../../entities/state";
+import {QuestionService} from "../../services/question.service";
 
 @Component({
   selector: 'app-quiz-over',
@@ -7,17 +9,13 @@ import {Question} from "../../entities/question";
   styleUrls: ['./quiz-over.component.css']
 })
 export class QuizOverComponent implements OnInit {
-  @Input()
-  questions: Question[];
 
-  @Input()
-  score: number = 0;
+  state$!: Observable<State>;
 
-  constructor() {
-    this.questions = [];
-  }
+  constructor(private questionService: QuestionService) {}
 
   ngOnInit(): void {
+    this.state$ = this.questionService.getState();
   }
 
 }
