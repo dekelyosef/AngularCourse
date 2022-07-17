@@ -75,10 +75,9 @@ export class BoardService {
   }
 
   async getNewBoard(guess: string): Promise<Board> {
-    return {
+    return { ... this.board,
       cells: this.getNewCells(guess),
       filledRows: this.board.filledRows + 1,
-      word: this.board.word,
       isGameOver: (this.board.filledRows === 5) || this.board.word === guess,
       hasWon: this.board.word === guess
     }
