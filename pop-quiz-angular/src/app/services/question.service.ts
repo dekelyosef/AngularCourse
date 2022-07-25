@@ -3,6 +3,7 @@ import {QUESTIONS} from "../entities/questions";
 import {State} from "../entities/state";
 import {Exam} from "../entities/exam";
 import {BehaviorSubject, Observable} from "rxjs";
+import {RouterService} from "./router.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,7 @@ export class QuestionService {
   private isBusy = false;
   private isBusy$ = new BehaviorSubject<boolean>(this.isBusy);
 
-  private isQuizOver = false;
-  private isQuizOver$ = new BehaviorSubject<boolean>(this.isQuizOver);
-
-  constructor() {}
+  constructor(private routerService: RouterService) {}
 
   initialState(): State {
     return {
@@ -38,10 +36,6 @@ export class QuestionService {
 
   getIsBusy(): Observable<boolean> {
     return this.isBusy$.asObservable();
-  }
-
-  getIsQuizOver(): Observable<boolean> {
-    return this.isQuizOver$.asObservable();
   }
 
   async userSelectAnswer(answer: string): Promise<void> {
@@ -81,11 +75,8 @@ export class QuestionService {
   async answerChosen(answer: string) {
     this.isBusy = true;
     this.isBusy$.next(this.isBusy);
-    if(!this.isQuizOver) {
-      await this.userSelectAnswer(answer);
-      this.isQuizOver = !this.state.currentQuestion;
-      this.isQuizOver$.next(this.isQuizOver);
-    }
+    await this.userSelectAnswer(answer);
+    this.routerService.setIsQuizOver(!this.state.currentQuestion);
     this.isBusy = false;
     this.isBusy$.next(this.isBusy);
   }

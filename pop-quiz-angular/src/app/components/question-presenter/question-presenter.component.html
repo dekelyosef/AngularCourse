@@ -1,5 +1,12 @@
-<h2>{{(state$ | async)!.currentQuestion.caption}}</h2>
-<ul>
-  <li (click)="onSelectAnswer(answer)" *ngFor="let answer of (state$ | async)!.currentQuestion.answers"
-      [ngClass]="(disabled$ | async) ? 'disabled': ''">{{answer}}</li>
-</ul>
+<ng-container *ngIf="(state$ | async)!.currentQuestion as currentQuestion">
+  <h2>{{currentQuestion.caption}}</h2>
+  <ul>
+    <li (click)="onSelectAnswer(answer)" *ngFor="let answer of currentQuestion.answers"
+        [ngClass]="(disabled$ | async) ? 'disabled': ''">{{answer}}</li>
+  </ul>
+  <div *ngIf="disabled$ | async" class="overlay">
+    <div class="popup">
+      <app-message message="Please wait!"></app-message>
+    </div>
+  </div>
+</ng-container>

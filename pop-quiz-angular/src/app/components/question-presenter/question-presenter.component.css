@@ -28,3 +28,24 @@ li:hover {
 .disabled {
   pointer-events: none;
 }
+
+.overlay {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8) repeat;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+.overlay .popup {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 40%;
+  height: 70%;
+}

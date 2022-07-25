@@ -1,10 +1,12 @@
-<div class="root">
-  <h2>Quiz Over! YOUR FINAL SCORE {{(state$ | async)!.score}}%</h2>
-  <div class="answer-box" *ngFor="let question of (state$ | async)!.summary">
-    <h4>{{question.caption}}</h4>
-    <p class="user-answer"
-      [class.correct]="question.userAnswer === question.correctAnswer"
-      [class.wrong]="question.userAnswer !== question.correctAnswer">{{question.answers[question.userAnswer]}}</p>
-    <p class="correct-answer">{{question.answers[question.correctAnswer]}}</p>
+<ng-container *ngIf="(isQuizOver$ | async)">
+  <div class="root">
+    <h2>Quiz Over! YOUR FINAL SCORE {{(state$ | async)!.score}}%</h2>
+    <div class="answer-box" *ngFor="let question of (state$ | async)!.summary">
+      <h4>{{question.caption}}</h4>
+      <p class="user-answer"
+         [class.correct]="question.userAnswer === question.correctAnswer"
+         [class.wrong]="question.userAnswer !== question.correctAnswer">{{question.answers[question.userAnswer]}}</p>
+      <p class="correct-answer">{{question.answers[question.correctAnswer]}}</p>
+    </div>
   </div>
-</div>
+</ng-container>

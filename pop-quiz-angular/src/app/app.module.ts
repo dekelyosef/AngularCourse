@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
+
 import { BrowserModule } from '@angular/platform-browser';
+import {AppRoutingModule} from "./app-routing.module";
 
 import { AppComponent } from './app.component';
 import { SummaryComponent } from './components/summary/summary.component';
@@ -13,10 +15,11 @@ import { MessageComponent } from './components/message/message.component';
     SummaryComponent,
     QuizOverComponent,
     QuestionPresenterComponent,
-    MessageComponent
+    MessageComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

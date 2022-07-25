@@ -1,7 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {QuestionService} from "./services/question.service";
-import {State} from "./entities/state";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -10,16 +7,9 @@ import {Observable} from "rxjs";
 })
 export class AppComponent implements OnInit {
 
-  state$!: Observable<State>;
-  isBusy$!: Observable<boolean>;
-  isQuizOver$!: Observable<boolean>;
-
-  constructor(private questionService: QuestionService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.state$ = this.questionService.getState();
-    this.isBusy$ = this.questionService.getIsBusy();
-    this.isQuizOver$ = this.questionService.getIsQuizOver();
   }
 
 }

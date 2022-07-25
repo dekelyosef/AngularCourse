@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {QuestionService} from "../../services/question.service";
 import {State} from "../../entities/state";
+import {RouterService} from "../../services/router.service";
 
 @Component({
   selector: 'app-question-presenter',

@@ -3,14 +3,7 @@
     <h1>Pop Quiz</h1>
   </div>
   <div class="main-area">
-    <app-question-presenter *ngIf="!(isQuizOver$ | async)">
-    </app-question-presenter>
-    <div *ngIf="isBusy$ | async" class="overlay">
-      <div class="popup">
-        <app-message message="Please wait!"></app-message>
-      </div>
-    </div>
-    <app-quiz-over *ngIf="isQuizOver$ | async"></app-quiz-over>
+    <router-outlet></router-outlet>
   </div>
   <div class="summary-area">
     <app-summary></app-summary>
