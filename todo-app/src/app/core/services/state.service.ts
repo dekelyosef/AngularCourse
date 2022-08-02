@@ -31,33 +31,33 @@ export class StateService {
   }
 
   getAllLists(): Observable<TodoList[]> {
-    return this.state$.asObservable()
-      .pipe(map(appState => appState.todoLists));
+    return this.state$.asObservable().pipe(
+      map(appState => appState.todoLists));
   }
 
   getListById(id: number): Observable<TodoList> {
-    return this.state$.asObservable()
-      .pipe(map(appState => appState.todoLists
-        .find(list => list.id === id)!));
+    return this.state$.asObservable().pipe(
+      map(appState => appState.todoLists.find(list => list.id === id)!));
   }
 
   getAllItems(): Observable<TodoItem[]> {
-    return this.state$.pipe(map(appState => appState.todoItems));
+    return this.state$.pipe(
+      map(appState => appState.todoItems));
   }
 
   getItem(id: number): Observable<TodoItem> {
-    return this.state$.pipe(map(appState => appState.todoItems
-        .find(item => item.id === id)!));
+    return this.state$.pipe(
+      map(appState => appState.todoItems.find(item => item.id === id)!));
   }
 
   getItemsOfList(listId: number): Observable<TodoItem[]> {
-    return this.state$.pipe(map(appState => appState.todoItems
-        .filter(item => item.listId === listId)));
+    return this.state$.pipe(
+      map(appState => appState.todoItems.filter(item => item.listId === listId)));
   }
 
   getAllNotCompletedItems(): Observable<TodoItem[]> {
-    return this.state$.pipe(map(appState => appState.todoItems
-        .filter(item => item.isCompleted)));
+    return this.state$.pipe(
+      map(appState => appState.todoItems.filter(item => item.isCompleted)));
   }
 
   async addList(caption: string, description: string, color: string, icon: string): Promise<number> {

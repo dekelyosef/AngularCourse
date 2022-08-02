@@ -1,0 +1,5 @@
+<div class="errors" *ngIf="errors">
+  <div *ngIf="errors['required'] as err">required</div>
+  <div *ngIf="errors['minlength'] as err">should contains at least {{err.requiredLength}} characters</div>
+  <div *ngIf="errors['words'] as err">words: {{err.actual}} / {{err.required}}</div>
+</div>

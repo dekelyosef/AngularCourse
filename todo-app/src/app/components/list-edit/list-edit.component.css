@@ -1,0 +1,59 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 50px;
+  margin: 8px 200px;
+  background: #4d74bc;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin: 4px 0px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input, textarea {
+  border: 0px transparent;
+  border-bottom: 1px solid darkgray;
+  outline: 0px transparent;
+  padding: 5px;
+}
+
+input:focus, textarea:focus {
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+  border: 1px solid red;
+  border-radius: 2px;
+  background-color: rgb(255, 176, 176);
+}
+
+button {
+  margin: 12px 0px;
+  padding: 3px 0px;
+  border-radius: 5px;
+  background-color: #d4e1f8;
+  color: black;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: auto;
+}
+
+button:hover:enabled {
+  color: white;
+  background-color: #9cb7e8;
+}
+
+select {
+  padding: 5px;
+}

@@ -10,6 +10,8 @@ import { ListEditComponent } from './components/list-edit/list-edit.component';
 import { ItemsComponent } from './components/items/items.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import { ErrorsPresenterComponent } from './components/errors-presenter/errors-presenter.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +22,14 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     ListEditComponent,
     ItemsComponent,
     PageNotFoundComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    ErrorsPresenterComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

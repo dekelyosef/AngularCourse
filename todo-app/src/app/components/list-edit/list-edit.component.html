@@ -1,1 +1,36 @@
-<p>list-edit works!</p>
+<div *ngIf="isNew;else update">
+  <h2>Add new list</h2>
+</div>
+<ng-template #update>
+  <h2>Edit list</h2>
+</ng-template>
+
+<div class="form" [formGroup]="group">
+  <div class="form-field" *ngIf="control('caption') as field">
+    <label>Caption</label>
+    <input type="text" [formControl]="field">
+    <app-errors-presenter [errors]="field.errors"></app-errors-presenter>
+  </div>
+  <div class="form-field" *ngIf="control('description') as field">
+    <label>Description</label>
+    <textarea rows="3" [formControl]="field"></textarea>
+    <app-errors-presenter [errors]="field.errors"></app-errors-presenter>
+  </div>
+  <div class="form-field" *ngIf="control('color') as field">
+    <label>Color</label>
+    <select name="colors" id="colors" [formControl]="field">
+      <option value="">Select color....</option>
+      <option *ngFor="let color of colors"
+           [style.color]="color.code">
+        {{color.name}}
+      </option>
+    </select>
+    <app-errors-presenter [errors]="field.errors"></app-errors-presenter>
+  </div>
+  <div class="form-field" *ngIf="control('icon') as field">
+    <label>Icon</label>
+    <textarea rows="3" [formControl]="field"></textarea>
+    <app-errors-presenter [errors]="field.errors"></app-errors-presenter>
+  </div>
+  <button [disabled]="!group.valid" (click)="saveList()">Save</button>
+</div>
