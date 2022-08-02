@@ -1,1 +1,6 @@
-<p>lists works!</p>
+<div class="lists" *ngIf="(lists$ | async) as lists">
+  <div class="list-item" *ngFor="let list of lists"
+       [style.background-color]="list.color" (click)="onListSelect(list.id)"> {{list.caption}}
+  </div>
+  <div class="list-item" (click)="addNewList()"> + Add new list...</div>
+</div>

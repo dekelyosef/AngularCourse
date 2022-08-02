@@ -1,0 +1,16 @@
+.lists {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.list-item {
+  border: 1px solid #000000;
+  margin: 4px;
+  padding: 4px;
+  user-select: none;
+  cursor: pointer;
+}
+
+/*.list-item:hover {*/
+/*  background-color: lightblue;*/
+/*}*/
