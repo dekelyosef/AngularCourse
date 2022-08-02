@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, filter, firstValueFrom, map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import {AppState} from "../models/appState";
 import {TodoList} from "../models/todoList";
 import {TodoItem} from "../models/todoItem";
@@ -12,7 +12,23 @@ export class StateService {
   private state!: AppState;
   private state$ = new BehaviorSubject<AppState>(this.state);
 
-  constructor() { }
+  constructor() {
+    this.state = { todoLists: [], todoItems: [] };
+
+    const list1: TodoList = {id: 1, caption: "list1", description: "list1", imageURL: "ddd", color:"blue"};
+    const list2: TodoList = {id: 2, caption: "list2", description: "list2", imageURL: "ddd", color:"blue"};
+    const item1: TodoItem = {id: 1, caption: "item1", listId: 1, isCompleted: true};
+    const item2: TodoItem = {id: 2, caption: "item2", listId: 1, isCompleted: false};
+    this.state.todoLists.push(list1, list2);
+    this.state.todoItems.push(item1, item2);
+    // this.state = {... this.state, todoLists: {... this.state.todoLists }};
+    console.log(this.state);
+    this.state$.next(this.state);
+  }
+
+  getState(): Observable<AppState> {
+    return this.state$.asObservable();
+  }
 
   getAllLists(): Observable<TodoList[]> {
     return this.state$.asObservable()
@@ -26,29 +42,25 @@ export class StateService {
   }
 
   getAllItems(): Observable<TodoItem[]> {
-    return this.state$.asObservable()
-      .pipe(map(appState => appState.todoItems));
+    return this.state$.pipe(map(appState => appState.todoItems));
   }
 
   getItem(id: number): Observable<TodoItem> {
-    return this.state$.asObservable()
-      .pipe(map(appState => appState.todoItems
+    return this.state$.pipe(map(appState => appState.todoItems
         .find(item => item.id === id)!));
   }
 
   getItemsOfList(listId: number): Observable<TodoItem[]> {
-    return this.state$.asObservable()
-      .pipe(map(appState => appState.todoItems
+    return this.state$.pipe(map(appState => appState.todoItems
         .filter(item => item.listId === listId)));
   }
 
   getAllNotCompletedItems(): Observable<TodoItem[]> {
-    return this.state$.asObservable()
-      .pipe(map(appState => appState.todoItems
+    return this.state$.pipe(map(appState => appState.todoItems
         .filter(item => item.isCompleted)));
   }
 
-  async AddList(caption: string, description: string, color: string, icon: string): Promise<number> {
+  async addList(caption: string, description: string, color: string, icon: string): Promise<number> {
     const newList: TodoList = {
       id: Math.floor(Math.random() * 100000000),
       caption: caption,
@@ -62,7 +74,7 @@ export class StateService {
     return newList.id;
   }
 
-  async ModifyList(list: TodoList): Promise<void> {
+  async modifyList(list: TodoList): Promise<void> {
     const index = this.state.todoLists.findIndex(l => list);
     this.state.todoLists[index] = { ...this.state.todoLists[index],
       caption: list.caption, description: list.description, color: list.color, imageURL: list.imageURL
@@ -70,7 +82,7 @@ export class StateService {
     this.state$.next(this.state);
   }
 
-  async AddTodoItem(listId: number, caption: string): Promise<number> {
+  async addTodoItem(listId: number, caption: string): Promise<number> {
     const newItem: TodoItem = {
       id: Math.floor(Math.random() * 100000000),
       caption: caption,
@@ -83,13 +95,13 @@ export class StateService {
     return newItem.id;
   }
 
-  async MarkAsCompleted(itemId: number): Promise<void> {
+  async markAsCompleted(itemId: number): Promise<void> {
     const index = this.state.todoItems.findIndex(i => i.id === itemId);
     this.state.todoItems[index] = { ...this.state.todoItems[index], isCompleted: true};
     this.state$.next(this.state);
   }
 
-  async DeleteList(listId: number): Promise<void> {
+  async deleteList(listId: number): Promise<void> {
     this.state = { ...this.state,
       todoLists: this.state.todoLists.filter(list => list.id !== listId),
       todoItems: this.state.todoItems.filter(item => item.listId !== listId)

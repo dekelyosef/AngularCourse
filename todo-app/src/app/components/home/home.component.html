@@ -1,0 +1,20 @@
+<div class="header">
+  <h1>Todo App</h1>
+  <h2>By Dekel Yosef</h2>
+  <h3>{{today}}</h3>
+  <button (click)="createNewList()">Create new list</button>
+</div>
+<section>
+  <div class="data">
+    <h1>{{(state$ | async)!.todoLists.length}}</h1>
+    <div>Lists</div>
+  </div>
+  <div class="data">
+    <h1>{{(state$ | async)!.todoItems.length}}</h1>
+    <div>Todo items</div>
+  </div>
+  <div class="data">
+    <h1>{{(getAllNotCompletedItems() | async)!.length}}</h1>
+    <div>Active items</div>
+  </div>
+</section>
