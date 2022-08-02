@@ -3,6 +3,8 @@ import {TodoList} from "../../core/models/todoList";
 import {StateService} from "../../core/services/state.service";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {Color} from "../../core/models/color";
+import {ColorsService} from "../../core/services/colors.service";
 
 @Component({
   selector: 'app-lists',
@@ -12,11 +14,14 @@ import {Observable} from "rxjs";
 export class ListsComponent implements OnInit {
 
   lists$!: Observable<TodoList[]>;
+  colors!: Color[];
 
   constructor(private stateService: StateService,
+              private colorService: ColorsService,
               private router: Router) { }
 
   ngOnInit(): void {
+    this.colors = this.colorService.getColors();
     this.lists$ = this.stateService.getAllLists();
   }
 

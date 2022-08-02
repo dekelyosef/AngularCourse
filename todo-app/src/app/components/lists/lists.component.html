@@ -1,6 +1,17 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--<style>-->
+<!--  div black:hover {color: black}-->
+<!--  div pink:hover {color: pink}-->
+<!--</style>-->
 <div class="lists" *ngIf="(lists$ | async) as lists">
   <div class="list-item" *ngFor="let list of lists"
-       [style.background-color]="list.color" (click)="onListSelect(list.id)"> {{list.caption}}
+       [style.border-color]="list.color"
+       (click)="onListSelect(list.id)">
+    <mat-icon [style.color]="list.color">{{list.imageURL}}</mat-icon>
+    {{list.caption}}
   </div>
-  <div class="list-item" (click)="addNewList()"> + Add new list...</div>
+  <div class="list-item add" (click)="addNewList()">
+    <mat-icon>add</mat-icon>
+    Add new list...
+  </div>
 </div>

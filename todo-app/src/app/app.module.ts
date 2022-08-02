@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { ErrorsPresenterComponent } from './components/errors-presenter/errors-presenter.component';
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ErrorsPresenterComponent } from './components/errors-presenter/errors-p
     imports: [
         BrowserModule,
         AppRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatIconModule
     ],
   providers: [],
   bootstrap: [AppComponent]

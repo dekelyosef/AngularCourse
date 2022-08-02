@@ -4,6 +4,8 @@ import {map, Observable, switchAll} from "rxjs";
 import {TodoList} from "../../core/models/todoList";
 import {StateService} from "../../core/services/state.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {Color} from "../../core/models/color";
+import {ColorsService} from "../../core/services/colors.service";
 
 @Component({
   selector: 'app-list-edit',
@@ -11,17 +13,12 @@ import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} f
   styleUrls: ['./list-edit.component.css']
 })
 export class ListEditComponent implements OnInit {
+
   isNew: boolean = true;
   listId: number = -1;
   list$!: Observable<TodoList>;
-
-  colors = [
-    {code: "#000000", name: "black"},
-    {code: "#0000ff", name: "blue"},
-    {code: "#ff0000", name: "red"},
-    {code: "#f49d0b", name: "orange"},
-    {code: "#22c45e", name: "green"},
-    {code: "#ff00a6", name: "pink"}];
+  colors!: Color[];
+  selectedColor!: string;
 
   group = new FormGroup({
     caption: new FormControl('', [Validators.required]),
@@ -32,9 +29,13 @@ export class ListEditComponent implements OnInit {
   });
 
   constructor(private stateService: StateService,
-              private route: ActivatedRoute) { }
+              private colorsService: ColorsService,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.colors = this.colorsService.getColors();
+    this.selectedColor = this.colors[0].code;
+
     const index$ = this.route.params.pipe(
       map(prm => Number(prm['id'])));
 
@@ -90,6 +91,10 @@ export class ListEditComponent implements OnInit {
         }
       }
     }
+  }
+
+  changeColor(color: string) {
+    this.selectedColor = color;
   }
 
 }

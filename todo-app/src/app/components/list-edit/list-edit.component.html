@@ -18,10 +18,14 @@
   </div>
   <div class="form-field" *ngIf="control('color') as field">
     <label>Color</label>
-    <select name="colors" id="colors" [formControl]="field">
+    <select name="colors" id="colors"
+            [formControl]="field"
+            [style.color]="selectedColor">
+<!--            selectionchange="changeColor(value)">-->
       <option value="">Select color....</option>
       <option *ngFor="let color of colors"
-           [style.color]="color.code">
+              [value]="color.code"
+              [style.color]="color.code">
         {{color.name}}
       </option>
     </select>

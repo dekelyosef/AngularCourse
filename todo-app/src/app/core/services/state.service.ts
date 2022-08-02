@@ -15,10 +15,14 @@ export class StateService {
   constructor() {
     this.state = { todoLists: [], todoItems: [] };
 
-    const list1: TodoList = {id: 1, caption: "list1", description: "list1", imageURL: "ddd", color:"blue"};
-    const list2: TodoList = {id: 2, caption: "list2", description: "list2", imageURL: "ddd", color:"orange"};
-    const list3: TodoList = {id: 3, caption: "list3", description: "list3", imageURL: "ddd", color:"pink"};
-    const list4: TodoList = {id: 4, caption: "list4", description: "list4", imageURL: "ddd", color:"red"};
+    const list1: TodoList =
+      {id: 1, caption: "Home", description: "this is the home list", imageURL: "home", color:"blue"};
+    const list2: TodoList =
+      {id: 2, caption: "Work", description: "this is the work list", imageURL: "work", color:"orange"};
+    const list3: TodoList =
+      {id: 3, caption: "Shopping", description: "this is the shopping list", imageURL: "shopping", color:"pink"};
+    const list4: TodoList =
+      {id: 4, caption: "Event", description: "this is the event list", imageURL: "event", color:"red"};
     const item1: TodoItem = {id: 1, caption: "item1", listId: 1, isCompleted: true};
     const item2: TodoItem = {id: 2, caption: "item2", listId: 1, isCompleted: false};
     this.state.todoLists.push(list1, list2, list3, list4);

@@ -1,1 +1,11 @@
-<p>list works!</p>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<span *ngIf="(list$ | async) as list">
+  <div class="title">
+    <h2>Lists ></h2>
+    <h2 [style.color]="list.color">> {{list.caption}}</h2>
+  </div>
+  <div class="body">
+    <mat-icon>home</mat-icon>
+    {{list.description}}
+  </div>
+</span>
