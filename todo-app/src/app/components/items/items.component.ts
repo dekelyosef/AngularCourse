@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from "rxjs";
+import {TodoItem} from "../../core/models/todoItem";
+import {StateService} from "../../core/services/state.service";
 
 @Component({
   selector: 'app-items',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemsComponent implements OnInit {
 
-  constructor() { }
+  items$!: Observable<TodoItem[]>;
 
-  ngOnInit(): void {
+  constructor(private stateService: StateService) {
+    this.items$ = this.stateService.getAllNotCompletedItems();
+  }
+
+  ngOnInit(): void { }
+
+  complete(item: TodoItem): void {
+    this.stateService.markAsCompleted(item.id).then();
   }
 
 }

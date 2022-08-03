@@ -1,1 +1,5 @@
-<p [ngClass]="{'completed': isCompleted}">{{caption}}</p>
+<mat-checkbox (change)="onChange()"
+              [checked]="isCompleted"
+              [disabled]="isCompleted">
+  <p [ngClass]="{'completed': isCompleted}">{{caption}}</p>
+</mat-checkbox>

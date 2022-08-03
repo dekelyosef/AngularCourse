@@ -25,13 +25,11 @@
   </div>
   <section *ngIf="(items$ | async) as items">
     <div *ngFor="let item of items">
-      <mat-checkbox (change)="OnChange(item)"
-                    [checked]="item.isCompleted"
-                    [disabled]="item.isCompleted">
         <app-todo-item-presenter
-        [caption]="item.caption!" [isCompleted]="item.isCompleted!">
+          [caption]="item.caption!"
+          [isCompleted]="item.isCompleted!"
+          (completed)="complete(item)">
         </app-todo-item-presenter>
-      </mat-checkbox>
     </div>
   </section>
   <section *ngIf="control('newItem') as field" [formGroup]="newItems">

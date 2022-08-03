@@ -1,4 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {TodoItem} from "../../core/models/todoItem";
+import {StateService} from "../../core/services/state.service";
 
 @Component({
   selector: 'app-todo-item-presenter',
@@ -13,9 +15,15 @@ export class TodoItemPresenterComponent implements OnInit {
   @Input()
   isCompleted!: boolean;
 
+  @Output()
+  completed: EventEmitter<void> = new EventEmitter();
+
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  onChange() {
+    this.completed.emit();
   }
 
 }

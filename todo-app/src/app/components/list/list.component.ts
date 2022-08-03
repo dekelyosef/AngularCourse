@@ -53,7 +53,6 @@ export class ListComponent implements OnInit {
         }
       }
     );
-    console.log(this.form);
   }
 
   control(name: string): FormControl<any> {
@@ -81,12 +80,13 @@ export class ListComponent implements OnInit {
     this.router.navigate(['lists']).then();
   }
 
-  OnChange(item: TodoItem): void {
-    this.stateService.markAsCompleted(item.id).then();
-  }
-
   addItem(listId: number): void {
     this.stateService.addTodoItem(listId, this.control("newItem").value).then();
     this.control("newItem").setValue("");
   }
+
+  complete(item: TodoItem): void {
+    this.stateService.markAsCompleted(item.id).then();
+  }
+
 }

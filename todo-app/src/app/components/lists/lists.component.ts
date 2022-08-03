@@ -18,12 +18,12 @@ export class ListsComponent implements OnInit {
 
   constructor(private stateService: StateService,
               private colorService: ColorsService,
-              private router: Router) { }
-
-  ngOnInit(): void {
+              private router: Router) {
     this.colors = this.colorService.getColors();
     this.lists$ = this.stateService.getAllLists();
   }
+
+  ngOnInit(): void { }
 
   onListSelect(index: number) {
     this.router.navigate(['lists', index]).then();

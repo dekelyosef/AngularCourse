@@ -61,7 +61,7 @@ export class StateService {
 
   getAllNotCompletedItems(): Observable<TodoItem[]> {
     return this.state$.pipe(
-      map(appState => appState.todoItems.filter(item => item.isCompleted)));
+      map(appState => appState.todoItems.filter(item => !item.isCompleted)));
   }
 
   async addList(caption: string, description: string, color: string, icon: string): Promise<number> {

@@ -1,1 +1,13 @@
-<p>items works!</p>
+<div *ngIf="(items$ | async) as items">
+  <div *ngIf="items.length > 0;else empty"></div>
+  <div *ngFor="let item of items">
+    <app-todo-item-presenter
+      [caption]="item.caption!"
+      [isCompleted]="item.isCompleted!"
+      (completed)="complete(item)">
+    </app-todo-item-presenter>
+  </div>
+</div>
+<ng-template #empty>
+  <h1>You do not have any uncompleted todo items</h1>
+</ng-template>
