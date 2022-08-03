@@ -1,11 +1,42 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <span *ngIf="(list$ | async) as list">
   <div class="title">
-    <h2>Lists ></h2>
+    <h2 class="navigator" (click)="returnToLists()">Lists ></h2>
     <h2 [style.color]="list.color">> {{list.caption}}</h2>
   </div>
   <div class="body">
-    <mat-icon>home</mat-icon>
-    {{list.description}}
+    <mat-icon [style.color]="list.color">home</mat-icon>
+    <div *ngIf="!isSafeDelete;then options else delete"></div>
+    <ng-template #options>
+      <div class="description">{{list.description}}</div>
+      <div class="buttons">
+        <button (click)="createNewList()">New list</button>
+        <button (click)="editList(list.id)">Edit</button>
+        <button (click)="safeDelete()">Delete</button>
+      </div>
+    </ng-template>
+    <ng-template #delete>
+      <div class="description">Are you sure you want to delete the entire list?</div>
+      <div class="buttons">
+        <button (click)="safeDelete()">Cancel</button>
+        <button (click)="deleteList(list.id)">Delete</button>
+      </div>
+    </ng-template>
   </div>
 </span>
+<section *ngIf="(items$ | async) as items">
+  <div *ngFor="let item of items">
+    <mat-checkbox (change)="OnChange(item)"
+                  [checked]="item.isCompleted"
+                  [disabled]="item.isCompleted">
+      <app-todo-item-presenter
+        [caption]="item.caption!" [isCompleted]="item.isCompleted!">
+      </app-todo-item-presenter>
+    </mat-checkbox>
+  </div>
+</section>
+
+<!--<section class="example-section" [formGroup]="form">-->
+<!--  <h4>You chose:</h4>-->
+<!--  {{form.value | json}}-->
+<!--</section>-->

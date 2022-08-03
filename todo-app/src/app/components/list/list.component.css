@@ -3,5 +3,54 @@
 }
 
 .body {
-  display: flex;
+  margin: 10px;
+  display: grid;
+  grid-template-areas:
+    'icon description'
+    'icon buttons';
+  grid-template-columns: 100px auto;
+  align-items: center;
+}
+
+mat-icon {
+  grid-area: icon;
+  font-size: 80px;
+  width: 80px;
+  height: 80px;
+}
+
+.description {
+  grid-area: description;
+}
+
+.buttons {
+  grid-area: buttons;
+}
+
+button {
+  margin-right: 10px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border-width: 1px;
+  background-color: white;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+button:hover:enabled {
+  color: white;
+  background-color: #9cb7e8;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: auto;
+}
+
+.navigator {
+  cursor: pointer;
+}
+
+section {
+  margin-left: 20px;
 }

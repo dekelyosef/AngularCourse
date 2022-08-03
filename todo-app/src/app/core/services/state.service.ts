@@ -110,6 +110,7 @@ export class StateService {
       todoLists: this.state.todoLists.filter(list => list.id !== listId),
       todoItems: this.state.todoItems.filter(item => item.listId !== listId)
     };
+    this.state$.next(this.state);
   }
 
 }

@@ -13,6 +13,8 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { ErrorsPresenterComponent } from './components/errors-presenter/errors-presenter.component';
 import {MatIconModule} from "@angular/material/icon";
+import { TodoItemPresenterComponent } from './components/todo-item-presenter/todo-item-presenter.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -24,14 +26,16 @@ import {MatIconModule} from "@angular/material/icon";
     ItemsComponent,
     PageNotFoundComponent,
     ToolbarComponent,
-    ErrorsPresenterComponent
+    ErrorsPresenterComponent,
+    TodoItemPresenterComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        MatIconModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatCheckboxModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
