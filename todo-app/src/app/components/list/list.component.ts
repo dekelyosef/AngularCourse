@@ -74,7 +74,7 @@ export class ListComponent implements OnInit {
 
   deleteList(id: number): void {
     this.stateService.deleteList(id).then();
-    this.router.navigate(['lists']).then();
+    this.router.navigate(['home']).then();
   }
 
   returnToLists(): void {

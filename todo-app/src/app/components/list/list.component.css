@@ -33,7 +33,7 @@ button {
   border-radius: 5px;
   border-width: 1px;
   background-color: white;
-  transition-duration: 0.4s;
+  /*transition-duration: 0.4s;*/
   cursor: pointer;
 }
 
@@ -45,6 +45,26 @@ button:hover:enabled {
 button:disabled {
   opacity: 0.6;
   cursor: auto;
+}
+
+.cancel {
+  background-color: green;
+}
+
+.cancel:hover:enabled {
+  color: green;
+  border: 2px solid green;
+  background-color: white;
+}
+
+.delete {
+  background-color: rgba(255, 0, 0, 0.64);
+}
+
+.delete:hover:enabled {
+  color: red;
+  border: 2px solid red;
+  background-color: white;
 }
 
 .navigator {

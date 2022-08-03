@@ -16,10 +16,10 @@
       </div>
     </ng-template>
     <ng-template #delete>
-      <div class="description">Are you sure you want to delete the entire list?</div>
+      <div class="description">Are you sure you want to delete the list?</div>
       <div class="buttons">
-        <button (click)="safeDelete()">Cancel</button>
-        <button (click)="deleteList(list.id)">Delete</button>
+        <button class="cancel" (click)="safeDelete()">Cancel</button>
+        <button class="delete" (click)="deleteList(list.id)">Yes I am sure</button>
       </div>
     </ng-template>
   </div>
