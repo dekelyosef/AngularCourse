@@ -23,20 +23,22 @@
       </div>
     </ng-template>
   </div>
-</span>
-<section *ngIf="(items$ | async) as items">
-  <div *ngFor="let item of items">
-    <mat-checkbox (change)="OnChange(item)"
-                  [checked]="item.isCompleted"
-                  [disabled]="item.isCompleted">
-      <app-todo-item-presenter
+  <section *ngIf="(items$ | async) as items">
+    <div *ngFor="let item of items">
+      <mat-checkbox (change)="OnChange(item)"
+                    [checked]="item.isCompleted"
+                    [disabled]="item.isCompleted">
+        <app-todo-item-presenter
         [caption]="item.caption!" [isCompleted]="item.isCompleted!">
-      </app-todo-item-presenter>
+        </app-todo-item-presenter>
+      </mat-checkbox>
+    </div>
+  </section>
+  <section *ngIf="control('newItem') as field" [formGroup]="newItems">
+    <mat-checkbox class="form-field" [disabled]="true">
+      <input type="text" [formControl]="field">
+      <button [disabled]="!newItems.valid" (click)="addItem(list.id)">+</button>
     </mat-checkbox>
-  </div>
-</section>
-
-<!--<section class="example-section" [formGroup]="form">-->
-<!--  <h4>You chose:</h4>-->
-<!--  {{form.value | json}}-->
-<!--</section>-->
+    <app-errors-presenter [errors]="field.errors"></app-errors-presenter>
+  </section>
+</span>

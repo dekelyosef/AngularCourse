@@ -6,6 +6,7 @@ import {StateService} from "../../core/services/state.service";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {Color} from "../../core/models/color";
 import {ColorsService} from "../../core/services/colors.service";
+import {ValidatorsService} from "../../core/services/validators.service";
 
 @Component({
   selector: 'app-list-edit',
@@ -22,14 +23,17 @@ export class ListEditComponent implements OnInit {
 
   group = new FormGroup({
     caption: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required,
-      Validators.minLength(30), this.containsWords(10)]),
+    description: new FormControl('', [
+      Validators.required,
+      Validators.minLength(30), this.validatorsService.containsWords(10)
+    ]),
     color: new FormControl('', [Validators.required]),
     icon: new FormControl('', [Validators.required]),
   });
 
   constructor(private stateService: StateService,
               private colorsService: ColorsService,
+              private validatorsService: ValidatorsService,
               private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -73,23 +77,6 @@ export class ListEditComponent implements OnInit {
       this.stateService.addList( list.caption, list.description, list.color, list.imageURL).then();
     } else {
       this.stateService.modifyList(list).then();
-    }
-  }
-
-  containsWords(number: number): (ctrl: AbstractControl) => null | ValidationErrors {
-    return ctrl => {
-      const val = ctrl.value;
-      if (typeof(val) !== 'string') return null;
-
-      const letters = val.split(' ');
-      if (letters.length > number) return null;
-
-      return {
-        'words': {
-          required: number,
-          actual: letters.length
-        }
-      }
     }
   }
 

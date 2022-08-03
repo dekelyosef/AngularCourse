@@ -4,6 +4,8 @@ import {StateService} from "../../core/services/state.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TodoList} from "../../core/models/todoList";
 import {TodoItem} from "../../core/models/todoItem";
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {ValidatorsService} from "../../core/services/validators.service";
 
 @Component({
   selector: 'app-list',
@@ -16,13 +18,23 @@ export class ListComponent implements OnInit {
   items$!: Observable<TodoItem[]>;
   isSafeDelete: boolean = false;
   form!: {value: string, completed: boolean}[];
+  newItems!: FormGroup;
 
   constructor(private stateService: StateService,
+              private validatorsService: ValidatorsService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.form = [];
+
+    this.newItems = new FormGroup({
+      newItem: new FormControl("", [
+        Validators.minLength(10),
+        this.validatorsService.containsWords(3)
+      ])
+    });
+
     const index$ = this.route.params.pipe(
       map(prm => Number(prm['id'])));
 
@@ -44,6 +56,10 @@ export class ListComponent implements OnInit {
     console.log(this.form);
   }
 
+  control(name: string): FormControl<any> {
+    return this.newItems.get(name)! as FormControl<any>;
+  }
+
   createNewList(): void {
     this.router.navigate(['lists', -1, 'edit']).then();
   }
@@ -61,11 +77,16 @@ export class ListComponent implements OnInit {
     this.router.navigate(['lists']).then();
   }
 
-  returnToLists() {
+  returnToLists(): void {
     this.router.navigate(['lists']).then();
   }
 
-  OnChange(item: TodoItem) {
+  OnChange(item: TodoItem): void {
     this.stateService.markAsCompleted(item.id).then();
+  }
+
+  addItem(listId: number): void {
+    this.stateService.addTodoItem(listId, this.control("newItem").value).then();
+    this.control("newItem").setValue("");
   }
 }

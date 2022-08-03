@@ -31,16 +31,16 @@ export class StateService {
   }
 
   getState(): Observable<AppState> {
-    return this.state$.asObservable();
+    return this.state$;
   }
 
   getAllLists(): Observable<TodoList[]> {
-    return this.state$.asObservable().pipe(
+    return this.state$.pipe(
       map(appState => appState.todoLists));
   }
 
   getListById(id: number): Observable<TodoList> {
-    return this.state$.asObservable().pipe(
+    return this.state$.pipe(
       map(appState => appState.todoLists.find(list => list.id === id)!));
   }
 

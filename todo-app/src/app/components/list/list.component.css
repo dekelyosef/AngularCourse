@@ -28,7 +28,7 @@ mat-icon {
 }
 
 button {
-  margin-right: 10px;
+  margin: 0px 10px;
   padding: 4px 8px;
   border-radius: 5px;
   border-width: 1px;
@@ -54,3 +54,9 @@ button:disabled {
 section {
   margin-left: 20px;
 }
+
+input {
+  margin-left: 10px;
+}
+
+
