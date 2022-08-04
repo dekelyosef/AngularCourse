@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Color} from "../models/color";
+import { Color } from "../models/color";
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +22,13 @@ export class ColorsService {
   getColors(): Color[] {
     return this.colors;
   }
-  
+
+  getColorByCode(code: string): Color {
+    return this.colors.find(color => color.code === code)!;
+  }
+
+  getColorByName(name: string): Color {
+    return this.colors.find(color => color.name === name)!;
+  }
+
 }

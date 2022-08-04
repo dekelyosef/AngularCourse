@@ -10,6 +10,8 @@
     'icon buttons';
   grid-template-columns: 100px auto;
   align-items: center;
+  padding: 8px 20px;
+  background: rgba(155, 182, 231, 0.34);
 }
 
 mat-icon {
@@ -33,7 +35,6 @@ button {
   border-radius: 5px;
   border-width: 1px;
   background-color: white;
-  /*transition-duration: 0.4s;*/
   cursor: pointer;
 }
 
@@ -78,5 +79,3 @@ section {
 input {
   margin-left: 10px;
 }
-
-

@@ -1,6 +1,5 @@
 .errors {
   font-size: 0.8em;
   color: #ff0000;
-  font-weight: bold;
-  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+  font-weight: 600;
 }

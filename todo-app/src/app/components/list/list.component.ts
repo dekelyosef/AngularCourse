@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {map, Observable, switchAll} from "rxjs";
-import {StateService} from "../../core/services/state.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {TodoList} from "../../core/models/todoList";
-import {TodoItem} from "../../core/models/todoItem";
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {ValidatorsService} from "../../core/services/validators.service";
+import { map, Observable, switchAll } from "rxjs";
+import { StateService } from "../../core/services/state.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { TodoList } from "../../core/models/todoList";
+import { TodoItem } from "../../core/models/todoItem";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ValidatorsService } from "../../core/services/validators.service";
 
 @Component({
   selector: 'app-list',

@@ -1,8 +1,4 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!--<style>-->
-<!--  div black:hover {color: black}-->
-<!--  div pink:hover {color: pink}-->
-<!--</style>-->
 <div class="lists" *ngIf="(lists$ | async) as lists">
   <div class="list-item" *ngFor="let list of lists"
        [style.border-color]="list.color"

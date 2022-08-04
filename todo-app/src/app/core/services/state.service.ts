@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, map, Observable} from "rxjs";
-import {AppState} from "../models/appState";
-import {TodoList} from "../models/todoList";
-import {TodoItem} from "../models/todoItem";
+import { BehaviorSubject, map, Observable } from "rxjs";
+import { AppState } from "../models/appState";
+import { TodoList } from "../models/todoList";
+import { TodoItem } from "../models/todoItem";
 
 @Injectable({
   providedIn: 'root'

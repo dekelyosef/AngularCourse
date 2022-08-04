@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from "rxjs";
-import {TodoItem} from "../../core/models/todoItem";
-import {StateService} from "../../core/services/state.service";
+import { Observable } from "rxjs";
+import { TodoItem } from "../../core/models/todoItem";
+import { StateService } from "../../core/services/state.service";
 
 @Component({
   selector: 'app-items',

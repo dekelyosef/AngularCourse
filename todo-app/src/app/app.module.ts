@@ -10,11 +10,14 @@ import { ListEditComponent } from './components/list-edit/list-edit.component';
 import { ItemsComponent } from './components/items/items.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
 import { ErrorsPresenterComponent } from './components/errors-presenter/errors-presenter.component';
-import {MatIconModule} from "@angular/material/icon";
+import { MatIconModule } from "@angular/material/icon";
 import { TodoItemPresenterComponent } from './components/todo-item-presenter/todo-item-presenter.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule, MatSelectTrigger } from "@angular/material/select";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatOptionModule } from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     AppRoutingModule,
     ReactiveFormsModule,
     MatIconModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule,
+    MatOptionModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

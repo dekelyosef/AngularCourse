@@ -1,10 +1,10 @@
-<div *ngIf="isNew;else update">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div *ngIf="(listId === -1);else update">
   <h2>Add new list</h2>
 </div>
 <ng-template #update>
   <h2>Edit list</h2>
 </ng-template>
-
 <div class="form" [formGroup]="group">
   <div class="form-field" *ngIf="control('caption') as field">
     <label>Caption</label>
@@ -18,11 +18,10 @@
   </div>
   <div class="form-field" *ngIf="control('color') as field">
     <label>Color</label>
-    <select name="colors" id="colors"
+    <select #colorSelector name="colors" id="colors"
             [formControl]="field"
-            [style.color]="selectedColor">
-<!--            selectionchange="changeColor(value)">-->
-      <option value="">Select color....</option>
+            [style.color]="selectedColor.code"
+            (change)="changeColor(colorSelector.value)">
       <option *ngFor="let color of colors"
               [value]="color.code"
               [style.color]="color.code">
@@ -33,7 +32,16 @@
   </div>
   <div class="form-field" *ngIf="control('icon') as field">
     <label>Icon</label>
-    <textarea rows="3" [formControl]="field"></textarea>
+    <mat-select #iconSelector *ngIf="(lists$ | async) as lists" name="icons" id="icons"
+                [formControl]="field"
+                (selectionChange)="changeIcon(iconSelector.value)">
+      <mat-select-trigger>
+        <mat-icon>{{selectedIcon}}</mat-icon>
+      </mat-select-trigger>
+      <mat-option *ngFor="let icon of icons" [value]="icon">
+        <mat-icon>{{icon}}</mat-icon>
+      </mat-option>
+    </mat-select>
     <app-errors-presenter [errors]="field.errors"></app-errors-presenter>
   </div>
   <button [disabled]="!group.valid" (click)="saveList()">Save</button>

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {map, Observable, switchAll} from "rxjs";
-import {TodoList} from "../../core/models/todoList";
-import {StateService} from "../../core/services/state.service";
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {Color} from "../../core/models/color";
-import {ColorsService} from "../../core/services/colors.service";
-import {ValidatorsService} from "../../core/services/validators.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { map, Observable, switchAll } from "rxjs";
+import { TodoList } from "../../core/models/todoList";
+import { StateService } from "../../core/services/state.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Color } from "../../core/models/color";
+import { ColorsService } from "../../core/services/colors.service";
+import { ValidatorsService } from "../../core/services/validators.service";
+import {IconsService} from "../../core/services/icons.service";
 
 @Component({
   selector: 'app-list-edit',
@@ -15,11 +16,13 @@ import {ValidatorsService} from "../../core/services/validators.service";
 })
 export class ListEditComponent implements OnInit {
 
-  isNew: boolean = true;
-  listId: number = -1;
+  listId!: number;
   list$!: Observable<TodoList>;
+  lists$!: Observable<TodoList[]>;
   colors!: Color[];
-  selectedColor!: string;
+  selectedColor!: Color;
+  icons!: string[];
+  selectedIcon!: string;
 
   group = new FormGroup({
     caption: new FormControl('', [Validators.required]),
@@ -33,13 +36,18 @@ export class ListEditComponent implements OnInit {
 
   constructor(private stateService: StateService,
               private colorsService: ColorsService,
+              private iconService: IconsService,
               private validatorsService: ValidatorsService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private router: Router) {
+    this.colors = this.colorsService.getColors();
+    this.selectedColor = this.colorsService.getColors()[0];
+    this.icons = this.iconService.getIcons();
+    this.selectedIcon = "";
+    this.listId = -1;
+  }
 
   ngOnInit(): void {
-    this.colors = this.colorsService.getColors();
-    this.selectedColor = this.colors[0].code;
-
     const index$ = this.route.params.pipe(
       map(prm => Number(prm['id'])));
 
@@ -50,15 +58,19 @@ export class ListEditComponent implements OnInit {
     this.list$.subscribe(
       next => {
         if (next !== undefined) {
-          this.isNew = false;
           this.listId = next.id;
           this.control("caption").setValue(next.caption);
           this.control("description").setValue(next.description);
-          this.control("color").setValue(next.color);
+          let color = this.colorsService.getColorByName(next.color);
+          this.control("color").setValue(color.code);
+          this.changeColor(color.code);
           this.control("icon").setValue(next.imageURL);
+          this.changeIcon(next.imageURL);
         }
       }
     );
+
+    this.lists$ = this.stateService.getAllLists();
   }
 
   control(name: string): FormControl<any> {
@@ -71,17 +83,22 @@ export class ListEditComponent implements OnInit {
       caption: this.control("caption").value,
       description: this.control("description").value,
       color: this.control("color").value,
-      imageURL: this.control("caption").value
+      imageURL: this.control("icon").value
     }
-    if(this.isNew) {
+    if(this.listId === -1) {
       this.stateService.addList( list.caption, list.description, list.color, list.imageURL).then();
     } else {
       this.stateService.modifyList(list).then();
     }
+    this.router.navigate(['lists']).then();
   }
 
-  changeColor(color: string) {
-    this.selectedColor = color;
+  changeColor(code: string) {
+    this.selectedColor = this.colorsService.getColorByCode(code);
+  }
+
+  changeIcon(value: string) {
+    this.selectedIcon = value;
   }
 
 }

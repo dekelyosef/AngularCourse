@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {TodoList} from "../../core/models/todoList";
-import {StateService} from "../../core/services/state.service";
-import {Router} from "@angular/router";
-import {Observable} from "rxjs";
-import {Color} from "../../core/models/color";
-import {ColorsService} from "../../core/services/colors.service";
+import { TodoList } from "../../core/models/todoList";
+import { StateService } from "../../core/services/state.service";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { Color } from "../../core/models/color";
+import { ColorsService } from "../../core/services/colors.service";
 
 @Component({
   selector: 'app-lists',
@@ -32,4 +32,5 @@ export class ListsComponent implements OnInit {
   addNewList(): void {
     this.router.navigate(['lists', -1, 'edit']).then();
   }
+
 }

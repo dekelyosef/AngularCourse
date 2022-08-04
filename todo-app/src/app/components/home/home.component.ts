@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from "rxjs";
-import {AppState} from "../../core/models/appState";
-import {StateService} from "../../core/services/state.service";
-import {TodoItem} from "../../core/models/todoItem";
-import {Router} from "@angular/router";
+import { Observable } from "rxjs";
+import { AppState } from "../../core/models/appState";
+import { StateService } from "../../core/services/state.service";
+import { TodoItem } from "../../core/models/todoItem";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -32,12 +32,8 @@ export class HomeComponent implements OnInit {
     return this.stateService.getAllNotCompletedItems();
   }
 
-  // getUncompletedItemsLength(): number {
-  //   const uncompletedItems = [];
-  //   this.stateService.getAllNotCompletedItems().pipe();
-  // }
-
   createNewList(): void {
     this.router.navigate(['lists', -1, 'edit']).then();
   }
+
 }
