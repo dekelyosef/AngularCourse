@@ -1,10 +1,27 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <div *ngIf="(listId === -1);else update">
   <h2>Add new list</h2>
 </div>
+
 <ng-template #update>
   <h2>Edit list</h2>
+  <div class="form-field" *ngIf="(lists$ | async) as lists">
+    <label>Edit another list</label>
+    <select #listSelector name="lists" id="lists"
+            [value]="listId"
+            [disabled]="group.dirty"
+            (change)="editAnotherList(listSelector.value)">
+      <option *ngFor="let list of lists"
+              [value]="list.id"
+              [selected]="list.id === listId">
+        {{list.caption}}
+      </option>
+    </select>
+  </div>
+
 </ng-template>
+
 <div class="form" [formGroup]="group">
   <div class="form-field" *ngIf="control('caption') as field">
     <label>Caption</label>
