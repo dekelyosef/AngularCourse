@@ -14,7 +14,7 @@ export class ValidatorsService {
       if (typeof(val) !== 'string') return null;
 
       const letters = val.split(' ');
-      if (letters.length > number) return null;
+      if (letters.length >= number) return null;
 
       return {
         'words': {

@@ -1,6 +1,6 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<div *ngIf="(listId === -1);else update">
+<div *ngIf="((index$ | async) === -1);else update">
   <h2>Add new list</h2>
 </div>
 
@@ -9,12 +9,12 @@
   <div class="form-field" *ngIf="(lists$ | async) as lists">
     <label>Edit another list</label>
     <select #listSelector name="lists" id="lists"
-            [value]="listId"
+            [value]="(index$ | async)"
             [disabled]="group.dirty"
             (change)="editAnotherList(listSelector.value)">
       <option *ngFor="let list of lists"
               [value]="list.id"
-              [selected]="list.id === listId">
+              [selected]="list.id === (index$ | async)">
         {{list.caption}}
       </option>
     </select>
@@ -46,7 +46,7 @@
     </select>
     <app-errors-presenter [errors]="field.errors"></app-errors-presenter>
   </div>
-  <div class="form-field" *ngIf="control('icon') as field">
+  <div class="form-field" *ngIf="control('imageURL') as field">
     <label>Icon</label>
     <mat-select name="icons" id="icons"
                 [formControl]="field"

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { map, Observable, Subscription, switchAll } from "rxjs";
+import {map, Observable, Subscription, switchAll, take} from "rxjs";
 import { TodoList } from "../../models/todoList";
 import { StateService } from "../../services/state.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
@@ -16,7 +16,7 @@ import { IconsService } from "../../services/icons.service";
 })
 export class ListEditComponent implements OnInit, OnDestroy {
 
-  listId!: number;
+  index$!: Observable<number>;
   lists$!: Observable<TodoList[]>;
   colors!: Color[];
   icons!: string[];
@@ -29,7 +29,7 @@ export class ListEditComponent implements OnInit, OnDestroy {
       Validators.minLength(30), this.validatorsService.containsWords(10)
     ]),
     color: new FormControl('', [Validators.required]),
-    icon: new FormControl('', [Validators.required]),
+    imageURL: new FormControl('', [Validators.required]),
   });
 
   constructor(private stateService: StateService,
@@ -40,27 +40,25 @@ export class ListEditComponent implements OnInit, OnDestroy {
               private router: Router) {
     this.colors = this.colorsService.getColors();
     this.icons = this.iconService.getIcons();
-    this.listId = -1;
   }
 
   ngOnInit(): void {
-    const index$ = this.activatedRoute.params.pipe(
+    this.index$ = this.activatedRoute.params.pipe(
       map(prm => Number(prm['id'])));
 
-    const list$ = index$.pipe(
+    const list$ = this.index$.pipe(
       map(index => this.stateService.getListById(index)),
       switchAll());
 
     this.subscription = list$.pipe().subscribe(
       next => {
         if (next !== undefined) {
-          this.listId = next.id;
           let color = this.colorsService.getColorByName(next.color);
-          this.group.setValue({
+          this.group.reset({
             caption: next.caption,
             description: next.description,
             color: color.code,
-            icon: next.imageURL
+            imageURL: next.imageURL
           });
         }
       }
@@ -79,18 +77,21 @@ export class ListEditComponent implements OnInit, OnDestroy {
 
   async saveList(): Promise<void> {
     let color = this.colorsService.getColorByCode(this.control("color").value);
-    const list: TodoList = {
-      id: this.listId,
-      caption: this.control("caption").value,
-      description: this.control("description").value,
-      color: color.name,
-      imageURL: this.control("icon").value
-    }
-    if(this.listId === -1) {
-      await this.stateService.addList( list.caption, list.description, list.color, list.imageURL);
-    } else {
-      await this.stateService.modifyList(list);
-    }
+
+    this.index$.pipe(take(1)).subscribe(index => {
+      const list: TodoList = {
+        id: index,
+        caption: this.control("caption").value,
+        description: this.control("description").value,
+        color: color.name,
+        imageURL: this.control("imageURL").value
+      }
+      if (list.id === -1) {
+        this.stateService.addList( list.caption, list.description, list.color, list.imageURL);
+      } else {
+        this.stateService.modifyList(list);
+      }
+    });
     await this.router.navigate(['lists']);
   }
 

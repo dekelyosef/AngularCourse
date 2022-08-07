@@ -5,7 +5,7 @@
     <h2 [style.color]="list.color">> {{list.caption}}</h2>
   </div>
   <div class="body">
-    <mat-icon [style.color]="list.color">home</mat-icon>
+    <mat-icon [style.color]="list.color">{{list.imageURL}}</mat-icon>
     <div *ngIf="!isSafeDelete;then options else delete"></div>
     <ng-template #options>
       <div class="description">{{list.description}}</div>

@@ -14,7 +14,6 @@ import {TodoList} from "../../models/todoList";
 export class HomeComponent implements OnInit {
 
   today!: Date;
-  state$!: Observable<AppState>;
   listsLength$!: Observable<number>;
   itemsLength$!: Observable<number>;
   uncompletedItemsLength$!: Observable<number>;
@@ -23,7 +22,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.today = new Date();
-    this.state$ = this.stateService.getState();
 
     this.listsLength$ = this.stateService.getAllLists().pipe(
       map(lists => lists.length));

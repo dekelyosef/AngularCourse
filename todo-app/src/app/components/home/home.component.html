@@ -4,7 +4,7 @@
   <h3>{{today | date:'shortDate'}}</h3>
   <button (click)="createNewList()">Create new list</button>
 </div>
-<section *ngIf="(state$ | async)">
+<section>
   <div class="data">
     <h1>{{(listsLength$ | async)}}</h1>
     <div>Lists</div>

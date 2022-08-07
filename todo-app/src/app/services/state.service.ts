@@ -76,13 +76,8 @@ export class StateService {
 
   async modifyList(list: TodoList): Promise<void> {
     this.state = {...this.state, todoLists: this.state.todoLists.map(
-      todoList => {
-        if(todoList.id !== list.id) {
-          return todoList;
-        } else {
-          return list;
-        }
-    })};
+      todoList => (todoList.id !== list.id) ? todoList : list)
+    };
     this.state$.next(this.state);
   }
 
@@ -100,18 +95,7 @@ export class StateService {
 
   async markAsCompleted(itemId: number): Promise<void> {
     this.state = {...this.state, todoItems: this.state.todoItems.map(
-      todoItem => {
-        if(todoItem.id !== itemId) {
-          return todoItem;
-        } else {
-          return {
-            id: todoItem.id,
-            caption: todoItem.caption,
-            listId: todoItem.listId,
-            isCompleted: true
-          };
-        }
-      })};
+      todoItem => (todoItem.id !== itemId) ? todoItem : { ...todoItem, isCompleted: true})};
     this.state$.next(this.state);
   }
 
