@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { map, Observable, switchAll } from "rxjs";
-import { StateService } from "../../core/services/state.service";
+import { StateService } from "../../services/state.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { TodoList } from "../../core/models/todoList";
-import { TodoItem } from "../../core/models/todoItem";
+import { TodoList } from "../../models/todoList";
+import { TodoItem } from "../../models/todoItem";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ValidatorsService } from "../../core/services/validators.service";
+import { ValidatorsService } from "../../services/validators.service";
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: 'app-list-details',
+  templateUrl: './list-details.component.html',
+  styleUrls: ['./list-details.component.css']
 })
-export class ListComponent implements OnInit {
+export class ListDetailsComponent implements OnInit {
 
   list$!: Observable<TodoList>;
   items$!: Observable<TodoItem[]>;
@@ -59,34 +59,34 @@ export class ListComponent implements OnInit {
     return this.newItems.get(name)! as FormControl<any>;
   }
 
-  createNewList(): void {
-    this.router.navigate(['lists', -1, 'edit']).then();
+  async createNewList(): Promise<void> {
+    await this.router.navigate(['lists', -1, 'edit']);
   }
 
-  editList(id: number): void {
-    this.router.navigate(['lists', id, 'edit']).then();
+  async editList(id: number): Promise<void> {
+    await this.router.navigate(['lists', id, 'edit']);
   }
 
   safeDelete(): void {
     this.isSafeDelete = !this.isSafeDelete;
   }
 
-  deleteList(id: number): void {
-    this.stateService.deleteList(id).then();
-    this.router.navigate(['home']).then();
+  async deleteList(id: number): Promise<void> {
+    await this.stateService.deleteList(id);
+    await this.router.navigate(['home']);
   }
 
-  returnToLists(): void {
-    this.router.navigate(['lists']).then();
+  async returnToLists(): Promise<void> {
+    await this.router.navigate(['lists']);
   }
 
-  addItem(listId: number): void {
-    this.stateService.addTodoItem(listId, this.control("newItem").value).then();
+  async addItem(listId: number): Promise<void> {
+    await this.stateService.addTodoItem(listId, this.control("newItem").value);
     this.control("newItem").setValue("");
   }
 
-  complete(item: TodoItem): void {
-    this.stateService.markAsCompleted(item.id).then();
+  async complete(item: TodoItem): Promise<void> {
+    await this.stateService.markAsCompleted(item.id);
   }
 
 }

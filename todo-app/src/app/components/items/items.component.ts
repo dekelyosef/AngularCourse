@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from "rxjs";
-import { TodoItem } from "../../core/models/todoItem";
-import { StateService } from "../../core/services/state.service";
+import { TodoItem } from "../../models/todoItem";
+import { StateService } from "../../services/state.service";
 
 @Component({
   selector: 'app-items',
@@ -18,8 +18,8 @@ export class ItemsComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  complete(item: TodoItem): void {
-    this.stateService.markAsCompleted(item.id).then();
+  async complete(item: TodoItem): Promise<void> {
+    await this.stateService.markAsCompleted(item.id);
   }
 
 }

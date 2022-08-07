@@ -18,10 +18,9 @@
   </div>
   <div class="form-field" *ngIf="control('color') as field">
     <label>Color</label>
-    <select #colorSelector name="colors" id="colors"
+    <select name="colors" id="colors"
             [formControl]="field"
-            [style.color]="selectedColor.code"
-            (change)="changeColor(colorSelector.value)">
+            [style.color]="field.value">
       <option *ngFor="let color of colors"
               [value]="color.code"
               [style.color]="color.code">
@@ -32,11 +31,11 @@
   </div>
   <div class="form-field" *ngIf="control('icon') as field">
     <label>Icon</label>
-    <mat-select #iconSelector *ngIf="(lists$ | async) as lists" name="icons" id="icons"
+    <mat-select name="icons" id="icons"
                 [formControl]="field"
-                (selectionChange)="changeIcon(iconSelector.value)">
+                [style.color]="field.value">
       <mat-select-trigger>
-        <mat-icon>{{selectedIcon}}</mat-icon>
+        <mat-icon>{{field.value}}</mat-icon>
       </mat-select-trigger>
       <mat-option *ngFor="let icon of icons" [value]="icon">
         <mat-icon>{{icon}}</mat-icon>

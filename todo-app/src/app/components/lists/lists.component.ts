@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TodoList } from "../../core/models/todoList";
-import { StateService } from "../../core/services/state.service";
+import { TodoList } from "../../models/todoList";
+import { StateService } from "../../services/state.service";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
-import { Color } from "../../core/models/color";
-import { ColorsService } from "../../core/services/colors.service";
+import { Color } from "../../models/color";
+import { ColorsService } from "../../services/colors.service";
 
 @Component({
   selector: 'app-lists',
@@ -25,12 +25,12 @@ export class ListsComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  onListSelect(index: number) {
-    this.router.navigate(['lists', index]).then();
+  async onListSelect(index: number): Promise<void> {
+    await this.router.navigate(['lists', index]);
   }
 
-  addNewList(): void {
-    this.router.navigate(['lists', -1, 'edit']).then();
+  async addNewList(): Promise<void> {
+    await this.router.navigate(['lists', -1, 'edit']);
   }
 
 }

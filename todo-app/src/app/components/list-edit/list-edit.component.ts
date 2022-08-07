@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { map, Observable, switchAll } from "rxjs";
-import { TodoList } from "../../core/models/todoList";
-import { StateService } from "../../core/services/state.service";
+import {map, Observable, switchAll, take} from "rxjs";
+import { TodoList } from "../../models/todoList";
+import { StateService } from "../../services/state.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Color } from "../../core/models/color";
-import { ColorsService } from "../../core/services/colors.service";
-import { ValidatorsService } from "../../core/services/validators.service";
-import {IconsService} from "../../core/services/icons.service";
+import { Color } from "../../models/color";
+import { ColorsService } from "../../services/colors.service";
+import { ValidatorsService } from "../../services/validators.service";
+import {IconsService} from "../../services/icons.service";
 
 @Component({
-  selector: 'app-list-edit',
+  selector: 'app-list-details-edit',
   templateUrl: './list-edit.component.html',
   styleUrls: ['./list-edit.component.css']
 })
@@ -18,11 +18,8 @@ export class ListEditComponent implements OnInit {
 
   listId!: number;
   list$!: Observable<TodoList>;
-  lists$!: Observable<TodoList[]>;
   colors!: Color[];
-  selectedColor!: Color;
   icons!: string[];
-  selectedIcon!: string;
 
   group = new FormGroup({
     caption: new FormControl('', [Validators.required]),
@@ -41,9 +38,7 @@ export class ListEditComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) {
     this.colors = this.colorsService.getColors();
-    this.selectedColor = this.colorsService.getColors()[0];
     this.icons = this.iconService.getIcons();
-    this.selectedIcon = "";
     this.listId = -1;
   }
 
@@ -55,50 +50,42 @@ export class ListEditComponent implements OnInit {
       map(index => this.stateService.getListById(index)),
       switchAll());
 
-    this.list$.subscribe(
+    this.list$.pipe(take(1)).subscribe(
       next => {
         if (next !== undefined) {
           this.listId = next.id;
-          this.control("caption").setValue(next.caption);
-          this.control("description").setValue(next.description);
           let color = this.colorsService.getColorByName(next.color);
-          this.control("color").setValue(color.code);
-          this.changeColor(color.code);
-          this.control("icon").setValue(next.imageURL);
-          this.changeIcon(next.imageURL);
+          this.group.setValue({
+            caption: next.caption,
+            description: next.description,
+            color: color.code,
+            icon: next.imageURL
+          });
         }
       }
     );
 
-    this.lists$ = this.stateService.getAllLists();
   }
 
   control(name: string): FormControl<any> {
     return this.group.get(name)! as FormControl<any>;
   }
 
-  saveList(): void {
+  async saveList(): Promise<void> {
+    let color =  this.colorsService.getColorByCode(this.control("color").value);
     const list: TodoList = {
       id: this.listId,
       caption: this.control("caption").value,
       description: this.control("description").value,
-      color: this.control("color").value,
+      color: color.name,
       imageURL: this.control("icon").value
     }
     if(this.listId === -1) {
-      this.stateService.addList( list.caption, list.description, list.color, list.imageURL).then();
+      await this.stateService.addList( list.caption, list.description, list.color, list.imageURL);
     } else {
-      this.stateService.modifyList(list).then();
+      await this.stateService.modifyList(list);
     }
-    this.router.navigate(['lists']).then();
-  }
-
-  changeColor(code: string) {
-    this.selectedColor = this.colorsService.getColorByCode(code);
-  }
-
-  changeIcon(value: string) {
-    this.selectedIcon = value;
+    await this.router.navigate(['lists']);
   }
 
 }

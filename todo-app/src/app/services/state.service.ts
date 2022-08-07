@@ -9,29 +9,26 @@ import { TodoItem } from "../models/todoItem";
 })
 export class StateService {
 
-  private state!: AppState;
+  private state: AppState = { todoLists: [], todoItems: [] };
   private state$ = new BehaviorSubject<AppState>(this.state);
 
   constructor() {
-    this.state = { todoLists: [], todoItems: [] };
-
     const list1: TodoList =
-      {id: 1, caption: "Home", description: "this is the home list", imageURL: "home", color:"blue"};
+      {id: 1, caption: "Home", description: "this is the home list-details", imageURL: "home", color:"blue"};
     const list2: TodoList =
-      {id: 2, caption: "Work", description: "this is the work list", imageURL: "work", color:"orange"};
+      {id: 2, caption: "Work", description: "this is the work list-details", imageURL: "work", color:"orange"};
     const list3: TodoList =
-      {id: 3, caption: "Shopping", description: "this is the shopping list", imageURL: "shopping", color:"pink"};
+      {id: 3, caption: "Shopping", description: "this is the shopping list-details", imageURL: "shopping", color:"pink"};
     const list4: TodoList =
-      {id: 4, caption: "Event", description: "this is the event list", imageURL: "event", color:"red"};
+      {id: 4, caption: "Event", description: "this is the event list-details", imageURL: "event", color:"red"};
     const item1: TodoItem = {id: 1, caption: "item1", listId: 1, isCompleted: true};
     const item2: TodoItem = {id: 2, caption: "item2", listId: 1, isCompleted: false};
-    this.state.todoLists.push(list1, list2, list3, list4);
-    this.state.todoItems.push(item1, item2);
+    this.state = {...this.state, todoLists: [list1, list2, list3, list4], todoItems: [item1, item2]};
     this.state$.next(this.state);
   }
 
   getState(): Observable<AppState> {
-    return this.state$;
+    return this.state$.asObservable();
   }
 
   getAllLists(): Observable<TodoList[]> {
@@ -72,17 +69,20 @@ export class StateService {
       color: color,
       imageURL: icon
     };
-    this.state.todoLists.push(newList);
+    this.state = {...this.state, todoLists: [...this.state.todoLists, newList]};
     this.state$.next(this.state);
-    // return firstValueFrom(this.state$.pipe(map(appState => appState.todoLists.findIndex(value => newList))));
     return newList.id;
   }
 
   async modifyList(list: TodoList): Promise<void> {
-    const index = this.state.todoLists.findIndex(l => list);
-    this.state.todoLists[index] = { ...this.state.todoLists[index],
-      caption: list.caption, description: list.description, color: list.color, imageURL: list.imageURL
-    }
+    this.state = {...this.state, todoLists: this.state.todoLists.map(
+      todoList => {
+        if(todoList.id !== list.id) {
+          return todoList;
+        } else {
+          return list;
+        }
+    })};
     this.state$.next(this.state);
   }
 
@@ -93,15 +93,25 @@ export class StateService {
       listId: listId,
       isCompleted: false
     };
-    this.state.todoItems.push(newItem);
+    this.state = {...this.state, todoItems: [...this.state.todoItems, newItem]};
     this.state$.next(this.state);
-    // return firstValueFrom(this.state$.pipe(map(appState => appState.todoItems.findIndex(value => newItem))));
     return newItem.id;
   }
 
   async markAsCompleted(itemId: number): Promise<void> {
-    const index = this.state.todoItems.findIndex(i => i.id === itemId);
-    this.state.todoItems[index] = { ...this.state.todoItems[index], isCompleted: true};
+    this.state = {...this.state, todoItems: this.state.todoItems.map(
+      todoItem => {
+        if(todoItem.id !== itemId) {
+          return todoItem;
+        } else {
+          return {
+            id: todoItem.id,
+            caption: todoItem.caption,
+            listId: todoItem.listId,
+            isCompleted: true
+          };
+        }
+      })};
     this.state$.next(this.state);
   }
 
