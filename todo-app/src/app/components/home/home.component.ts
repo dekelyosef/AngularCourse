@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {map, Observable, switchAll} from "rxjs";
-import { AppState } from "../../models/appState";
+import { map, Observable } from "rxjs";
 import { StateService } from "../../services/state.service";
-import { TodoItem } from "../../models/todoItem";
 import { Router } from "@angular/router";
-import {TodoList} from "../../models/todoList";
 
 @Component({
   selector: 'app-home',
